@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM node:slim
 
 LABEL "name"="Container Action Template"
 LABEL "maintainer"="GitHub Actions <support+actions@github.com>"
