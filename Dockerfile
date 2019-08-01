@@ -8,8 +8,9 @@ LABEL "com.github.actions.name"="GitHub Container Action Template"
 LABEL "com.github.actions.description"="Container action template."
 LABEL "com.github.actions.icon"="package"
 LABEL "com.github.actions.color"="blue"
-COPY LICENSE README.md /
 
-COPY entrypoint.sh /entrypoint.sh
+COPY . .
 
-ENTRYPOINT ["/entrypoint.sh"]
+RUN npm install --production
+
+ENTRYPOINT ["node", "/lib/main.js"]
