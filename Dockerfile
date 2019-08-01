@@ -13,4 +13,4 @@ COPY . .
 
 RUN npm install --production
 
-ENTRYPOINT ["node", "/lib/main.js"]
+RUN node lib/main.js
