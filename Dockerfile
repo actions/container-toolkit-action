@@ -11,8 +11,6 @@ LABEL "com.github.actions.color"="blue"
 
 COPY . .
 
-RUN ls
-
 RUN npm install --production
 
 ENTRYPOINT ["node", "/lib/main.js"]
