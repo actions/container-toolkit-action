@@ -13,6 +13,4 @@ COPY . .
 
 RUN npm install --production
 
-RUN printenv
-
-ENTRYPOINT ["printenv"]
+ENTRYPOINT ["node", "/lib/main.js"]
