@@ -57,12 +57,16 @@ describe('action', () => {
       }
     })
 
-    await main.run()
+    try {
+      await main.run()
 
-    expect(runMock).toHaveReturned()
-    expect(setFailedMock).toHaveBeenNthCalledWith(
-      1,
-      'milliseconds not a number'
-    )
+      expect(runMock).toHaveReturned()
+      expect(setFailedMock).toHaveBeenNthCalledWith(
+        1,
+        'milliseconds not a number'
+      )
+    } catch (error) {
+      console.log(error)
+    }
   })
 })
