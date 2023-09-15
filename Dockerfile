@@ -1,10 +1,12 @@
 # Set the base image to use for subsequent instructions
 FROM node:slim
 
+# Create a directory for the action code
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
 # Copy the repository contents to the container
 COPY . .
 
-# RUN npm install --production
-
 # Run the specified command within the container
-ENTRYPOINT ["node", "/dist/index.js"]
+ENTRYPOINT ["node", "/usr/src/app/dist/index.js"]
