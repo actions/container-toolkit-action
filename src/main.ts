@@ -1,17 +1,30 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+import * as core from '@actions/core'
+import * as github from '@actions/github'
+import { wait } from './wait'
 
-async function run() {
+/**
+ * The main function for the action.
+ */
+export async function run(): Promise<void> {
   try {
-    const myInput = core.getInput('myInput');
-    core.debug(`Hello ${myInput} from inside a container`);
+    // Get the action input(s)
+    const ms: number = parseInt(core.getInput('milliseconds'), 10)
 
-    // Get github context data
-    const context = github.context;
-    console.log(`We can even get context data, like the repo: ${context.repo.repo}`)
+    // Output the payload for debugging
+    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
+    core.debug(
+      `The event payload: ${JSON.stringify(github.context.payload, null, 2)}`
+    )
+
+    // Log the current timestamp, wait, then log the new timestamp
+    core.info(new Date().toTimeString())
+    await wait(ms)
+    core.info(new Date().toTimeString())
+
+    // Set outputs for other workflow steps to use
+    core.setOutput('time', new Date().toTimeString())
   } catch (error) {
-    core.setFailed(error.message);
+    // Fail the workflow run if an error occurs
+    if (error instanceof Error) core.setFailed(error.message)
   }
 }
-
-run();
