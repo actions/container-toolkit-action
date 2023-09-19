@@ -87,8 +87,7 @@ need to perform some initial setup steps before you can develop your action.
    Or you can pass a file with environment variables using `--env-file`.
 
    ```bash
-   $ cat ./.env.test
-   INPUT_MILLISECONDS=2000
+   $ echo "INPUT_MILLISECONDS=2000" > ./.env.test
 
    $ docker run --env-file ./.env.test actions/container-toolkit-action
    ::debug::The event payload: {}
