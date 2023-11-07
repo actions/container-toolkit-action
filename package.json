@@ -1,16 +1,16 @@
 {
   "name": "container-toolkit-template",
+  "description": "Container template action using @actions/toolkit",
   "version": "0.0.0",
-  "description": "Container template action using actions/toolkit",
-  "main": "lib/main.js",
-  "scripts": {
-    "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "test": "jest"
-  },
+  "author": "",
+  "private": true,
+  "homepage": "https://github.com/actions/container-toolkit-template#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/actions/container-toolkit-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/actions/container-toolkit-template/issues"
   },
   "keywords": [
     "actions",
@@ -18,26 +18,74 @@
     "toolkit",
     "setup"
   ],
-  "author": "GitHub",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/actions/container-toolkit-template/issues"
+  "exports": {
+    ".": "./dist/index.js"
   },
-  "homepage": "https://github.com/actions/container-toolkit-template#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "bundle": "npm run format:write && npm run package",
+    "ci-test": "jest",
+    "format:write": "prettier --write **/*.ts",
+    "format:check": "prettier --check **/*.ts",
+    "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
+    "package": "ncc build src/index.ts --license licenses.txt",
+    "package:watch": "npm run package -- --watch",
+    "test": "(jest && make-coverage-badge --output-path ./badges/coverage.svg) || make-coverage-badge --output-path ./badges/coverage.svg",
+    "all": "npm run format:write && npm run lint && npm run test && npm run package"
+  },
+  "license": "MIT",
+  "jest": {
+    "preset": "ts-jest",
+    "verbose": true,
+    "clearMocks": true,
+    "testEnvironment": "node",
+    "testRunner": "jest-circus/runner",
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "testMatch": [
+      "**/*.test.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "./src/**"
+    ]
+  },
   "dependencies": {
-    "@actions/core": "^1.0.0",
-    "@actions/io": "^1.0.0",
-    "@actions/exec": "^1.0.0",
-    "@actions/github": "^1.0.0",
-    "@actions/tool-cache": "^1.0.0"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^5.1.1"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.13",
-    "@types/node": "^12.0.4",
-    "jest": "^24.8.0",
-    "jest-circus": "^24.7.1",
-    "prettier": "^1.17.1",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.1"
+    "@types/jest": "^29.5.4",
+    "@types/node": "^20.6.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "@vercel/ncc": "^0.38.0",
+    "eslint": "^8.49.0",
+    "eslint-plugin-github": "^4.10.0",
+    "eslint-plugin-jest": "^27.2.3",
+    "eslint-plugin-jsonc": "^2.9.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest-circus": "^29.7.0",
+    "make-coverage-badge": "^1.2.0",
+    "prettier": "^3.0.3",
+    "prettier-eslint": "^15.0.1",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
   }
 }
