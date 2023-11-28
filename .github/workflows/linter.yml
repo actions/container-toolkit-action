@@ -1,22 +1,19 @@
-name: Lint Code Base
+name: Lint Codebase
 
 on:
   pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   lint:
-    name: Lint Code Base
+    name: Lint Codebase
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: read
-      statuses: write
 
     steps:
       - name: Checkout
@@ -34,7 +31,7 @@ jobs:
         id: install
         run: npm ci
 
-      - name: Lint Code Base
+      - name: Lint Codebase
         id: super-linter
         uses: super-linter/super-linter/slim@v5
         env:
