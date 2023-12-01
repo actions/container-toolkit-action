@@ -2,11 +2,12 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
+
+permissions:
+  contents: read
 
 jobs:
   test-typescript:
@@ -22,7 +23,7 @@ jobs:
         id: setup-node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: .node-version
           cache: npm
 
       - name: Install Dependencies
