@@ -14,6 +14,8 @@ publishing, and versioning guidance.
 For more information on the GitHub Actions toolkit, see the
 [`actions/toolkit` repository](https://github.com/actions/toolkit/tree/main/docs)
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/actions/container-toolkit-action)
+
 ## Create Your Own Action
 
 To create your own action, you can use this repository as a template! Just
