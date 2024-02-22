@@ -3,6 +3,8 @@ FROM node:slim
 
 # Create a directory for the action code
 RUN mkdir -p /usr/src/app
+
+# Set the working directory inside the container.
 WORKDIR /usr/src/app
 
 # Copy the repository contents to the container
