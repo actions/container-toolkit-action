@@ -53,7 +53,6 @@ rules:
       ['error', { 'accessibility': 'no-public' }],
     '@typescript-eslint/explicit-function-return-type':
       ['error', { 'allowExpressions': true }],
-    '@typescript-eslint/func-call-spacing': ['error', 'never'],
     '@typescript-eslint/no-array-constructor': 'error',
     '@typescript-eslint/no-empty-interface': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
@@ -76,8 +75,6 @@ rules:
     '@typescript-eslint/promise-function-async': 'error',
     '@typescript-eslint/require-array-sort-compare': 'error',
     '@typescript-eslint/restrict-plus-operands': 'error',
-    '@typescript-eslint/semi': ['error', 'never'],
     '@typescript-eslint/space-before-function-paren': 'off',
-    '@typescript-eslint/type-annotation-spacing': 'error',
     '@typescript-eslint/unbound-method': 'error'
   }
