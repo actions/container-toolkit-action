@@ -1,25 +1,22 @@
 import * as core from '@actions/core'
-import * as github from '@actions/github'
-import { wait } from './wait'
+import { wait } from './wait.js'
 
 /**
  * The main function for the action.
+ *
+ * @returns Resolves when the action is complete.
  */
 export async function run(): Promise<void> {
   try {
-    // Get the action input(s)
-    const ms: number = parseInt(core.getInput('milliseconds'), 10)
+    const ms: string = core.getInput('milliseconds')
 
-    // Output the payload for debugging
     // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(
-      `The event payload: ${JSON.stringify(github.context.payload, null, 2)}`
-    )
+    core.debug(`Waiting ${ms} milliseconds ...`)
 
     // Log the current timestamp, wait, then log the new timestamp
-    core.info(new Date().toTimeString())
-    await wait(ms)
-    core.info(new Date().toTimeString())
+    core.debug(new Date().toTimeString())
+    await wait(parseInt(ms, 10))
+    core.debug(new Date().toTimeString())
 
     // Set outputs for other workflow steps to use
     core.setOutput('time', new Date().toTimeString())
