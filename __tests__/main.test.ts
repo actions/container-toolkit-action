@@ -1,68 +1,62 @@
 /**
  * Unit tests for the action's main functionality, src/main.ts
  *
- * These should be run as if the action was called from a workflow.
- * Specifically, the inputs listed in `action.yml` should be set as environment
- * variables following the pattern `INPUT_<INPUT_NAME>`.
+ * To mock dependencies in ESM, you can create fixtures that export mock
+ * functions and objects. For example, the core module is mocked in this test,
+ * so that the actual '@actions/core' module is not imported.
  */
+import { jest } from '@jest/globals'
+import * as core from '../__fixtures__/core.js'
+import { wait } from '../__fixtures__/wait.js'
 
-import * as core from '@actions/core'
-import * as main from '../src/main'
+// Mocks should be declared before the module being tested is imported.
+jest.unstable_mockModule('@actions/core', () => core)
+jest.unstable_mockModule('../src/wait.js', () => ({ wait }))
 
-// Mock the GitHub Actions core library
-//const debugMock = jest.spyOn(core, 'debug')
-const infoMock = jest.spyOn(core, 'info').mockImplementation()
-const getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
-const setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
-const setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
+// The module being tested should be imported dynamically. This ensures that the
+// mocks are used in place of any actual dependencies.
+const { run } = await import('../src/main.js')
 
-// Mock the action's main function
-const runMock = jest.spyOn(main, 'run')
-
-describe('action', () => {
+describe('main.ts', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    // Set the action's inputs as return values from core.getInput().
+    core.getInput.mockImplementation(() => '500')
+
+    // Mock the wait function so that it does not actually wait.
+    wait.mockImplementation(() => Promise.resolve('done!'))
   })
 
-  it('sets the time output', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation((name: string): string => {
-      switch (name) {
-        case 'milliseconds':
-          return '500'
-        default:
-          return ''
-      }
-    })
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
 
-    await main.run()
+  it('Sets the time output', async () => {
+    await run()
 
-    expect(runMock).toHaveReturned()
-    expect(infoMock).toHaveBeenCalledWith(expect.stringMatching(/.*/))
-    expect(infoMock).toHaveBeenCalledWith(expect.stringMatching(/.*/))
-    expect(setOutputMock).toHaveBeenCalledWith(
+    // Verify the time output was set.
+    expect(core.setOutput).toHaveBeenNthCalledWith(
+      1,
       'time',
-      expect.stringMatching(/.*/)
+      // Simple regex to match a time string in the format HH:MM:SS.
+      expect.stringMatching(/^\d{2}:\d{2}:\d{2}/)
     )
   })
 
-  it('sets a failed status', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation((name: string): string => {
-      switch (name) {
-        case 'milliseconds':
-          return 'this is not a number'
-        default:
-          return ''
-      }
-    })
+  it('Sets a failed status', async () => {
+    // Clear the getInput mock and return an invalid value.
+    core.getInput.mockClear().mockReturnValueOnce('this is not a number')
 
-    await main.run()
+    // Clear the wait mock and return a rejected promise.
+    wait
+      .mockClear()
+      .mockRejectedValueOnce(new Error('milliseconds is not a number'))
 
-    expect(runMock).toHaveReturned()
-    expect(setFailedMock).toHaveBeenNthCalledWith(
+    await run()
+
+    // Verify that the action was marked as failed.
+    expect(core.setFailed).toHaveBeenNthCalledWith(
       1,
-      'milliseconds not a number'
+      'milliseconds is not a number'
     )
   })
 })
