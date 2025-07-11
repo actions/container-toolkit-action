@@ -19,8 +19,8 @@ generated from.
 | `.devcontainer/`       | Development Container Configuration |
 | `.github/`             | GitHub Configuration                |
 | `.licenses/`           | License Information                 |
-| `.vscode/`             | VSCode Configuration                |
-| `badges/`              | Badges for README                   |
+| `.vscode/`             | Visual Studio Code Configuration    |
+| `badges/`              | Badges for readme                   |
 | `dist/`                | Generated JavaScript Code           |
 | `src/`                 | TypeScript Source Code              |
 | `.licensed.yml`        | Licensed Configuration              |
