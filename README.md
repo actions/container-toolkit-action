@@ -1,9 +1,10 @@
 # Create a Container Action with the GitHub Actions Toolkit
 
 [![GitHub Super-Linter](https://github.com/actions/container-toolkit-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![Check `dist/`](https://github.com/actions/container-toolkit-action/actions/workflows/check-dist.yml/badge.svg)
+[![Check dist/](https://github.com/actions/container-toolkit-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/container-toolkit-action/actions/workflows/check-dist.yml)
 ![CI](https://github.com/actions/container-toolkit-action/actions/workflows/ci.yml/badge.svg)
-[![Code Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+[![CodeQL](https://github.com/actions/container-toolkit-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/container-toolkit-action/actions/workflows/codeql-analysis.yml)
+[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
 Use this template to bootstrap the creation of a container action with the
 GitHub Actions toolkit. :rocket:
@@ -38,10 +39,16 @@ need to perform some initial setup steps before you can develop your action.
 
 > [!NOTE]
 >
-> You'll need to have reasonably modern versions of
+> You'll need to have a reasonably modern version of
 > [Node.js](https://nodejs.org) and
-> [Docker](https://www.docker.com/get-started/) handy (e.g. Node.js v20+ and
-> docker engine v20+).
+> [Docker](https://www.docker.com/get-started/) handy (Node.js v20.x or later
+> and Docker engine v20+ or later should work!). If you are using a version
+> manager like [`nodenv`](https://github.com/nodenv/nodenv) or
+> [`fnm`](https://github.com/Schniz/fnm), this template has a `.node-version`
+> file at the root of the repository that can be used to automatically switch to
+> the correct version when you `cd` into the repository. Additionally, this
+> `.node-version` file is used by GitHub Actions in any `actions/setup-node`
+> actions.
 
 1. :hammer_and_wrench: Install the dependencies
 
@@ -194,14 +201,10 @@ So, what are you waiting for? Go ahead and start customizing your action!
    npm run all
    ```
 
-   > [!WARNING]
-   >
-   > This step is important! It will run [`ncc`](https://github.com/vercel/ncc)
-   > to build the final JavaScript action code with all dependencies included.
-   > If you do not run this step, your action will not work correctly when it is
-   > used in a workflow. This step also includes the `--license` option for
-   > `ncc`, which will create a license file for all of the production node
-   > modules used in your project.
+   > This step is important! It will run [`rollup`](https://rollupjs.org/) to
+   > build the final JavaScript action code with all dependencies included. If
+   > you do not run this step, your action will not work correctly when it is
+   > used in a workflow.
 
 1. Commit your changes
 
@@ -222,7 +225,7 @@ So, what are you waiting for? Go ahead and start customizing your action!
 Your action is now published! :rocket:
 
 For information about versioning your action, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
+[Versioning](https://github.com/actions/toolkit/blob/main/docs/action-versioning.md)
 in the GitHub Actions toolkit.
 
 ## Validate the Action
