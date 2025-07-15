@@ -1,7 +1,4 @@
 quiet: true
 skip-check:
-  - CKV_GHA_7
-  # Ensure that HEALTHCHECK instructions have been added to container images
   - CKV_DOCKER_2
-  # Ensure that a user for the container has been created
   - CKV_DOCKER_3
