@@ -1,9 +1,6 @@
 # Set the base image to use for subsequent instructions
 FROM node:slim
 
-# Create the node user
-RUN useradd -m node
-
 # Create a directory for the action code
 RUN mkdir -p /usr/src/app
 
